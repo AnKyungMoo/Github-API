@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.item.view.*
 import kotlinx.android.synthetic.main.item_user.view.*
 import kotlin.collections.ArrayList
 
-class RecyclerViewAdapter(val context: Context, val list: ArrayList<Any>) : RecyclerView.Adapter<RecyclerViewAdapter.GenericViewHolder>() {
+class RecyclerViewAdapter(val context: Context, val list: ArrayList<ViewType>) : RecyclerView.Adapter<RecyclerViewAdapter.GenericViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder {
 
         when (viewType) {
