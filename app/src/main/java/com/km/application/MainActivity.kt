@@ -13,38 +13,32 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var subscription: Disposable
 
+    private lateinit var recyclerViewAdapter: RecyclerViewAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        var list = arrayListOf(
-            TitleModel("image", "name", 0),
-            RecyclerViewModel("name1", "description1", 5, 1),
-            RecyclerViewModel("name2", "description3", 1, 1)
-        )
-
-        val recyclerViewAdapter = RecyclerViewAdapter(this, list)
+        recyclerViewAdapter = RecyclerViewAdapter(this)
         recycler_view.adapter = recyclerViewAdapter
 
-        // scroll type: horizontal or vertical
         val layoutManager = LinearLayoutManager(this)
         recycler_view.layoutManager = layoutManager
+        recycler_view.setHasFixedSize(true)
 
-        getUserInfo("AnkyoungMoo")
+        getUserInfo("AnKyoungMoo")
         getUserRepo("AnkyoungMoo")
     }
 
     private fun getUserInfo(name: String) {
-
         subscription = ServiceModule.restAPI().userInfo(name)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { result ->
-                    Log.d("result", result.name)
+                    Log.d("result", result.login)
+                    recyclerViewAdapter.addItem(TitleModel(result.avatar_url, result.login, 0))
                 },
                 { err ->
-                    Log.d("Error",err.toString())
+                    Log.e("Error User",err.toString())
                 }
             )
     }
@@ -56,9 +50,15 @@ class MainActivity : AppCompatActivity() {
             .subscribe(
                 { result ->
                     Log.d("result", result[0].name)
+
+                    result.forEach{
+                        recyclerViewAdapter.addItem(RecyclerViewModel(it.name, it.description, it.stargazers_count, 2))
+                    }
+
+
                 },
                 { err ->
-                    Log.d("Error",err.toString())
+                    Log.e("Error ㅠㅠ",err.toString())
                 }
             )
     }

@@ -7,9 +7,9 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ServiceAPI {
-    @GET("users/{name}")
-    fun userInfo(@Path("name") name: String): Observable<NetworkObject.UserInfo>
+    @GET("users/{login}")
+    fun userInfo(@Path("login") name: String): Observable<NetworkObject.UserInfo>
 
-    @GET("users/{name}/repos")
-    fun userRepo(@Path("name") name: String) : Observable<List<NetworkObject.Repo>>
+    @GET("users/{login}/repos")
+    fun userRepo(@Path("login") name: String) : Observable<List<NetworkObject.Repo>>
 }

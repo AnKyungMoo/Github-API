@@ -5,7 +5,7 @@ object NetworkObject {
         val id: Long,
         val avatar_url: String,
         val html_url: String,
-        val name: String,
+        val login: String,
         val company: String
     )
 
